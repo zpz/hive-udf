@@ -2,16 +2,12 @@
 
 Hive UDF (user-defined functions) in Python.
 
-Reference: [blog post](https://zpz.github.io/blog/hive-udf/).
-
 This package provides a single function `make_udf` for
 working with Hive UDF written in Python.
-Please see source code for documentation.
+Please see the source code for documentation.
 
-Several example UDF modules are included, and can be used for tests.
-Because real tests need a Hive setup, they are not performed here.
-User may test this package in their own Hive envivonrment, using
-the few example UDFs.
-The blog post offers some ideas about testing as well.
+[This blog post](https://zpz.github.io/blog/hive-udf/) describes how the code arrived at the current shape after addressing multiple very tricky problems. If you want to understand the code, read this post.
+
+Some test code is included, along with several example UDF modules, which are used in the tests. The user is encouraged to run these tests in their Hive setup to confirm that things work as expected.
 
 This package is ready for production use.

@@ -101,8 +101,6 @@ def make_udf(module_or_code: Union[ModuleType, str], *args) -> str:
     but rather in `module_or_code` and the HiveQL statements that use the 
     output of this function (i.e. presence of `CLUSTER BY`).
 
-    Please see example `hive_udaf_example.py`.
-
     While the current function is written in Python 3.6+, the UDF `module_or_code`
     is written in the Python version that is installed on the Hive server.
     '''
