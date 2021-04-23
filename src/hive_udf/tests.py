@@ -4,7 +4,7 @@
 
 import random
 import string
-from typing import List
+from typing import List, Sequence, Tuple
 
 import numpy as np
 import pandas as pd
@@ -20,6 +20,9 @@ class _Hive:
         raise NotImplementedError
 
     def fetchall(self) -> List[tuple]:
+        raise NotImplementedError
+
+    def create_table(self, db_name, tb_name, cols: Sequence[Tuple[str, str]]):
         raise NotImplementedError
 
 
@@ -233,18 +236,24 @@ def test_all(hive: _Hive, db_name: str):
 
     print('creating table "{}.{}"'.format(db_name, tb_name))
     hive.execute(f'DROP TABLE IF EXISTS {db_name}.{tb_name}')
-    hive.execute(f'''
-                 CREATE TABLE {db_name}.{tb_name}
-                 (
-                     id INT,
-                     info_json STRING
-                 )
-                 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\\t'
-                 STORED AS ORC
-                 TBLPROPERTIES (
-                     'orc.compress'='ZLIB'
-                 )
-                 ''')
+
+    # hive.execute(f'''
+    #              CREATE TABLE {db_name}.{tb_name}
+    #              (
+    #                  id INT,
+    #                  info_json STRING
+    #              )
+    #              STORED AS ORC
+    #              TBLPROPERTIES (
+    #                  'orc.compress'='ZLIB'
+    #              )
+    #              ''')
+    hive.create_table(
+        db_name,
+        tb_name,
+        [('id', 'INT'), ('info_json', 'STRING')],
+    )
+
     try:
         assert tb_name in _get_tables(hive, db_name)
         print(f'table {db_name}.{tb_name} created successfully')
