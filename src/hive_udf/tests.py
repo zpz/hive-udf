@@ -261,12 +261,12 @@ def test_all(hive: _Hive, db_name: str):
         hive.execute(f'''
                      INSERT OVERWRITE TABLE {db_name}.{tb_name}
                      VALUES
-                        (1, '{"make": "honda", "price": 1000}'),
-                        (2, '{"make": "ford", "price": 2000}'),
-                        (3, '{"make": "ford"}'),
-                        (4, '{"make": "tesla", "price": 3000}'),
-                        (5, '{"make": "honda", "price": 2000}'),
-                        (6, '{"make": "ford", "price": 4000}')
+                        (1, '{{"make": "honda", "price": 1000}}'),
+                        (2, '{{"make": "ford", "price": 2000}}'),
+                        (3, '{{"make": "ford"}}'),
+                        (4, '{{"make": "tesla", "price": 3000}}'),
+                        (5, '{{"make": "honda", "price": 2000}}'),
+                        (6, '{{"make": "ford", "price": 4000}}')
                      ''')
 
         _test_udf(hive, db_name, tb_name)
