@@ -53,7 +53,7 @@ def main():
 
                 price_sum += p
                 n_good += 1
-        avg_price = round(price / n_good)
+        avg_price = round(price_sum / n_good)
         print(make + SEP + str(avg_price) + SEP + str(n_bad))
 
 
