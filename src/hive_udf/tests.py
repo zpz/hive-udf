@@ -133,7 +133,7 @@ def _test_udf_args(hive, db_name, tb_name):
             '''
         return sql
 
-    ### jap ###
+    # ## jap ###
 
     sql = make_sql('jap', 250)
     z = _run_sql(hive, sql, ['make', 'price'])
@@ -147,7 +147,7 @@ def _test_udf_args(hive, db_name, tb_name):
     assert z['make'].tolist() == ['honda', 'honda']
     assert z['price'].tolist() == [1000, 2000]
 
-    ### america ###
+    # ## america ###
 
     sql = make_sql('america', 550)
     z = _run_sql(hive, sql, ['make', 'price'])

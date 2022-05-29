@@ -8,7 +8,7 @@ from typing import Union
 logger = logging.getLogger(__name__)
 
 
-def make_udf(module_or_code: Union[ModuleType, str], *args) -> str:
+def make_udf(module_or_code: Union[ModuleType, str], *args, pycmd='python') -> str:
     '''
     This function takes a Python module or a code string,
     encodes the source code of the module or the code string
@@ -46,14 +46,16 @@ def make_udf(module_or_code: Union[ModuleType, str], *args) -> str:
             that does not contain any special characters (such as space,
             quotes) that could potentially cause trouble on the command-line.
 
-            In this case, `module_or_code` processes a known number 
-            of arguments specified on the command-line before processing 
+            In this case, `module_or_code` processes a known number
+            of arguments specified on the command-line before processing
             records coming from `stdin`.
-            The number of args must be fixed; there can not be optional 
-            arguments with default values, because the UDF assumes data 
+            The number of args must be fixed; there can not be optional
+            arguments with default values, because the UDF assumes data
             records begin after the known number of arguments.
 
             See `hive_udf_args_example.py` for an example.
+
+        `pycmd`: the Python command on the Hive worker node, such as `python`, `python3`.
 
     Suppose `s` is the output of this function, then it is used like this
     to construct a HiveQL statement:
@@ -72,7 +74,7 @@ def make_udf(module_or_code: Union[ModuleType, str], *args) -> str:
     An important detail is that this string (`s`) is wrapped by single quotes
     in the HiveQL statement, as shown above.
 
-    If `module_or_code` is a UDAF rather than UDF, a `CLUSTER BY` clause 
+    If `module_or_code` is a UDAF rather than UDF, a `CLUSTER BY` clause
     is needed, like this:
 
         sql = f"""
@@ -97,8 +99,8 @@ def make_udf(module_or_code: Union[ModuleType, str], *args) -> str:
         3. UDF with arguments
         4. UDAF with arguments
 
-    The difference between UDF and UDAF does not appear in this function, 
-    but rather in `module_or_code` and the HiveQL statements that use the 
+    The difference between UDF and UDAF does not appear in this function,
+    but rather in `module_or_code` and the HiveQL statements that use the
     output of this function (i.e. presence of `CLUSTER BY`).
 
     While the current function is written in Python 3.6+, the UDF `module_or_code`
@@ -115,7 +117,7 @@ def make_udf(module_or_code: Union[ModuleType, str], *args) -> str:
 
     script = 'import sys, base64; code = sys.argv[1]; code = base64.urlsafe_b64decode(code); code = code if sys.version_info[0] == 2 else code.decode(); exec(code);'
 
-    code = f'python -c "{script}" {str(encoded)[2:-1]}'
+    code = f'{pycmd} -c "{script}" {str(encoded)[2:-1]}'
 
     if args:
         code = code + ' ' + ' '.join(str(v) for v in args)
