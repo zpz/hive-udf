@@ -1,7 +1,4 @@
 #!/bin/bash
 
-rm -rf ./dist
-python3 setup.py sdist
+source <(curl -s https://raw.githubusercontent.com/zpz/utilities.py/master/make-release)
 
-# then
-# python3 -m twine upload dist/*

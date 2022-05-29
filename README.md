@@ -7,7 +7,9 @@ working with Hive UDF written in Python.
 
 Some test code is included, along with several example UDF modules, which are used in the tests. The user is recommended to run these tests in their Hive setup to confirm that things work as expected.
 
-This package is ready for production use.
+## Status
+
+Production ready and stable (hardly needs any changes).
 
 ## Quick start
 
